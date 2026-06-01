@@ -1,0 +1,33 @@
+# add this and check the network connection to litellm and neo4j
+# check the openai_base_url basically is just localhost:4000 for litellm
+# check api key from litellm master key
+# make sure google ai studio key is set for embedding model
+graphiti:
+    image: vxcontrol/graphiti:latest
+    restart: unless-stopped
+    container_name: graphiti
+    hostname: graphiti
+    expose:
+      - 8000/tcp
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    environment:
+      - NEO4J_URI=${NEO4J_URI:-bolt://neo4j:7687}
+      - NEO4J_USER=${NEO4J_USER:-neo4j}
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD:-wgfJBfA7cJBIiolff4}
+      - NEO4J_DATABASE=${NEO4J_DATABASE:-neo4j}
+      - OPENAI_BASE_URL=${OPEN_AI_SERVER_URL:-}
+      - OPENAI_API_KEY=${OPEN_AI_KEY:-}
+    logging:
+      options:
+        max-size: 50m
+        max-file: "7"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/healthcheck || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - pentagi-network

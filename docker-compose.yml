@@ -51,7 +51,6 @@ services:
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
       - CEREBRAS_API_KEY=${CEREBRAS_API_KEY:-}
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
-      - OPENAI_API_KEY=${LITELLM_MASTER_KEY:-sk-your-master-key-here}
     volumes:
       - ./litellm-config.yaml:/app/config.yaml
     command: ["--config", "/app/config.yaml", "--port", "4000"]
