@@ -1,21 +1,9 @@
 model_list:
 
-  - model_name: gpt-4o
-    litellm_params:
-      model: gemini/gemini-3.1-flash-lite
-      api_key: "os.environ/GEMINI_API_KEY"
-      rpm: 10
-      tpm: 175000
-
   # ============================================================
   # EMBEDDING MODELS — Vector Search
   # ============================================================
-  - model_name: text-embedding-gemini
-    litellm_params:
-      model: gemini/gemini-embedding-001
-      api_key: "os.environ/GEMINI_API_KEY"
-      rpm: 70
-  - model_name: text-embedding-gemini2
+  - model_name: text-embedding-3-small
     litellm_params:
       model: gemini/gemini-embedding-2
       api_key: "os.environ/GEMINI_API_KEY"
@@ -24,11 +12,11 @@ model_list:
   # ============================================================
   # AGENT DEDICATED LINE — OpenRouter Programming Specialized Line (Independent isolation, protect RPD)
   # ============================================================
-  - model_name: agent-nemotron
+  - model_name: gpt-5-mini
     litellm_params:
-      model: openrouter/nvidia/nemotron-3-super-120b-a12b:free
+      model: openai/nvidia/nemotron-3-super-120b-a12b:free
+      api_base: "https://openrouter.ai/api/v1"
       api_key: "os.environ/OPENROUTER_API_KEY"
-      # Release RPM limit to allow Cline instant high-frequency calls, after consuming 1000 RPD OpenRouter will intercept
       rpm: 30 
       
   - model_name: agent-gpt
@@ -67,5 +55,4 @@ router_settings:
   cooldown_time: 60
  
   model_group_alias:
-    "text-embedding-3-small": "text-embedding-gemini2"
     "gpt-5-nano": "agent-gpt"

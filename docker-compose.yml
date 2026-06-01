@@ -54,8 +54,6 @@ services:
       - OPENAI_API_KEY=${LITELLM_MASTER_KEY:-sk-your-master-key-here}
     volumes:
       - ./litellm-config.yaml:/app/config.yaml
-      - ./mem0_hook.py:/app/mem0_hook.py 
-      - ./qdrant_db:/app/qdrant_db
     command: ["--config", "/app/config.yaml", "--port", "4000"]
     networks:
       - ai-network
@@ -69,7 +67,6 @@ volumes:
   redis_data: 
   ollama_data:
   pg_data:
-  qdrant_data:
 
 networks:
   ai-network: 
